@@ -11,9 +11,43 @@ use Session;
 class CustomAuthController extends Controller
 {
 
-    public function login(){
-        return view('pages.login');
+    public function loginUser(Request $request){
+/*
+        $request->validate([
+            'user_name'=>'required|min:4|max:15',
+            'password'=>'required|min:5|max:12'
+        ]);
+
+        $user = User::where('user_name','=',$request->user_name)->first();
+        if($user){
+            if(Hash::check($request->password, $user->password)){
+                $request-> session()->put('loginId',$user->id);
+
+                return redirect()->route('dashboard');
+                //return redirect('/dashboard');
+                //return view('pages.home');
+            }else{
+                return back()->with('fail','Password Not Match.');
+            }
+        }else{
+            return back()->with('fail','This user name is invalid.');
+        }
+*/
+        $incomingFields = $request->validate([
+            'loginusername' => 'required',
+            'loginpassword' => 'required'
+        ]);
+
+        if(auth()->attempt(['user_name' => $incomingFields['loginusername'],'password'=> $incomingFields['loginpassword']])){
+            $request->session()->regenerate();
+            return redirect('/dashboard')->with('success','You Have Successfully Logged In.');
+        }else{
+            //return 'Nice try';
+            return redirect('/')->with('error','Something error happened.');
+        }
+        //return view('pages.login');
     }
+
     public function registration(){
         return view('pages.user_registration');
     }
@@ -49,27 +83,27 @@ class CustomAuthController extends Controller
     }
 
 
-    public function loginUser(Request $request){
-        $request->validate([
-            'user_name'=>'required|min:4|max:15',
-            'password'=>'required|min:5|max:12'
-        ]);
+    // public function loginUser(Request $request){
+    //     $request->validate([
+    //         'user_name'=>'required|min:4|max:15',
+    //         'password'=>'required|min:5|max:12'
+    //     ]);
 
-        $user = User::where('user_name','=',$request->user_name)->first();
-        if($user){
-            if(Hash::check($request->password, $user->password)){
-                $request-> session()->put('loginId',$user->id);
+    //     $user = User::where('user_name','=',$request->user_name)->first();
+    //     if($user){
+    //         if(Hash::check($request->password, $user->password)){
+    //             $request-> session()->put('loginId',$user->id);
 
-                return redirect()->route('dashboard');
-                //return redirect('/dashboard');
-                //return view('pages.home');
-            }else{
-                return back()->with('fail','Password Not Match.');
-            }
-        }else{
-            return back()->with('fail','This user name is invalid.');
-        }
-    }
+    //             return redirect()->route('dashboard');
+    //             //return redirect('/dashboard');
+    //             //return view('pages.home');
+    //         }else{
+    //             return back()->with('fail','Password Not Match.');
+    //         }
+    //     }else{
+    //         return back()->with('fail','This user name is invalid.');
+    //     }
+    // }
 
     public function dashboard(){
         $data = array();
@@ -81,6 +115,7 @@ class CustomAuthController extends Controller
     }
 
     public function logout(){
-        return "Logout";
+        auth()->logout();
+        return redirect('/')->with('success','You Have Successfully Logged Out.');
     }
 }

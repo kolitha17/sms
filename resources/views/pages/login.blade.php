@@ -35,7 +35,8 @@ height: 100%;
     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
       <h1><i class="fa-solid fa-cubes-stacked fa-fade" style="color: #be1e13; font-size: 50px;"></i> Stock Management System</h1>
       <div class="form-container">
-        <form action="/home" _method="POST">
+        <form action="/login-user" method="POST">
+          @csrf
             <!-- Sign in text -->
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
               <h4 class="lead fw-normal mb-0 me-3">Sign in</h4>
@@ -46,14 +47,14 @@ height: 100%;
             <!-- Email input -->
             <div class="form-outline mb-4">
               <label class="form-label" for="form3Example3">Email address</label>
-              <input type="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address"  />
+              <input type="text" id="loginusername" name="loginusername" class="form-control form-control-lg" placeholder="Enter a valid email address"  />
               
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-3">
               <label class="form-label" for="form3Example4">Password</label>
-              <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password"  />
+              <input type="password" id="loginpassword" name="loginpassword" class="form-control form-control-lg" placeholder="Enter password"  />
               
             </div>
 

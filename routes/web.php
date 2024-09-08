@@ -72,12 +72,9 @@ Route::get('/user_registration_certify', function () {
 Route::get('/registration',[CustomAuthController::class,'registration']);
 Route::post('/register-user',[CustomAuthController::class,'registerUser'])->name('User.registerUser');
 Route::post('/login-user',[CustomAuthController::class,'loginUser'])->name('loginUser');
-Route::get('/dashboard',[CustomAuthController::class,'dashboard'])->name('dashboard');
-Route::post('/logout-user',[CustomAuthController::class,'logout'])->name('logout');
-
-
-
-
+Route::get('/dashboard',[CustomAuthController::class,'dashboard'])->middleware('mustBeLoggedIn');
+//Route::post('/logout-user',[CustomAuthController::class,'logout'])->name('logout');
+Route::post('/logout',[CustomAuthController::class,"logout"])->middleware('mustBeLoggedIn');
 
 
 //Save Category data into the database
