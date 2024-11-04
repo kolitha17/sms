@@ -153,9 +153,9 @@ Route::get('/form_item/{id}/delete', [InvItemController::class, 'itemDelete'])->
 
 
 //load Registered user form
-Route::get('user_table', [UserViewController::class,'index'])->name('UserView.index');
+Route::get('user_table', [UserViewController::class,'index'])->middleware('mustBeLoggedIn');
 //load registered user for certify
-Route::get('user_registration_certify', [UserController::class,'getUserForCertify'])->name('UserView.getUserForCertify');
+Route::get('user_registration_certify', [UserController::class,'getUserForCertify'])->middleware('mustBeLoggedIn');
 //edit registered user for certify
 Route::get('user_registration_certify/{id}', [UserController::class,'edit'])->name('RegUserCertify.edit');
 //confirm or reject user
@@ -182,7 +182,7 @@ Route::get('get-province-code/{province_id}', [OrgUnitController::class,'getProv
 //show supplier form
 Route::get('form_add_supplier',[SupplierController::class, 'index'])->name('Supplier.index');
 //save supplier details
-Route::post('/form_add_supplier', [SupplierController::class, 'store'])->name('Supplier.store');
+Route::post('/form_add_supplier', [SupplierController::class, 'store']);
 //edit supplier details
 Route::get('/form_add_supplier/{id}/edit', [SupplierController::class, 'edit'])->name('Supplier.edit');
 //update supplier details

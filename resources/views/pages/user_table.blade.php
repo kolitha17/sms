@@ -41,11 +41,8 @@
                         <h4 class="card-title mt-2">Registered Users</h4>
                     </header>
                     <article class="card-body">
-                        <form>
-                            <div class="mt-2">
-                                <label>Search : </label>
-
-                            </div>
+                        
+                            
 
                             <table id="regUserTable" class="table table-striped" style="width:100%">
                                 <thead class="bg-light">
@@ -62,7 +59,7 @@
 
                                 @foreach($users as $key => $user)
                                     <tr>
-                                        <td>{{++$key}}</td>
+                                        <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</td>
                                         <td>{{$user->full_name}}</td>
                                         <td>{{$user->emp_no}}</td>
                                         <td>{{$user->designation_id}}</td>
@@ -73,14 +70,16 @@
                                                             @endif rounded-pill text-dark">
                                             {{$user->available_status}}</span></td>
                                     </tr>
-
-
+                                    
                                 @endforeach
+                                
                                 </tbody>
-
+                                
                             </table>
-                        </form>
-
+                            <!-- Pagination Links -->
+                        {{ $users->links() }}
+                        
+                        
                     </article>
 
                 </div>

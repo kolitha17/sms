@@ -4,100 +4,15 @@
 {{--identity the content form the layout--}}
 @section('content')
 
-    <script>
-
-        {{--Design for Data Table--}}
-        $(document).ready( function () {
-            // $('#regUserTable').DataTable();
-            new DataTable('#supplierTable');
-        } );
-
-        // open modal for edit
-        $(document).ready(function() {
-            $('.editSupplier').click(function(event) {
-                event.preventDefault();
-                var supplierId = $(this).data('id');
-
-                // AJAX call to fetch category details
-                $.ajax({
-                    url: '/form_add_supplier/' + supplierId + '/edit',
-                    method: 'GET',
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        var json_return = $.parseJSON(response);
-                        // Populate modal fields with the fetched data
-                        console.log(json_return);
-                        $('#ModalUpdateSupplier_name').val(json_return.name);
-                        $('#ModalUpdateSupplier_address').val(json_return.address);
-                        $('#ModalUpdateSupplier_contactName').val(json_return.contact_person);
-                        $('#ModalUpdateSupplier_TelNo').val(json_return.telephone_no);
-                        $('#ModalUpdateSupplier_MobNo').val(json_return.mobile_no);
-                        $('#ModalUpdateSupplier_Email').val(json_return.email);
-                        $('#supplier_id').val(json_return.id);
-                        $('#ModalEdiSupplier').modal('show');
-                    },
-
-                });
-            });
-
-
-            // modal for update function
-            $('#SupplierUpdateForm').submit(function(event) {
-                event.preventDefault();
-                var fd = new FormData (this);
-
-                $('#btnUpdate').text('Updating...');
-
-                // AJAX call to fetch category details
-                $.ajax({
-                    url: '{{route('Supplier.update')}}',
-                    method: 'POST',
-                    data: fd,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    success: function(response) {
-                        // var json_return = $.parseJSON(response);
-
-                        console.log(response);
-                        if (response.status==200) {
-                            Swal.fire({
-                                title:  'Updated!',
-                                text: 'Supplier Details Updated Successfully!',
-                                icon: 'success'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // reload Page
-                                    location.reload(true);
-                                }
-                            });
-                        }
-                        // Populate modal fields with the fetched data
-
-                        $('#btnUpdate').text('Update Supplier');
-                        $('#SupplierUpdateForm')[0].reset();
-                        $('#ModalEdiSupplier').modal('hide');
-                    },
-
-                });
-            });
-
-        });
-
-    </script>
-
-
     <div class="container">
         <div class="row">
             {{--<div class="col-md-3"></div>--}}
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
 
                     <h5 class="card-header">Add Supplier Details</h5>
                     <div class="card-body">
-                        <form action="{{route('Supplier.store')}}" method="post" id="supplierAddForm" enctype="multipart/form-data">
+                        <form action="/form_add_supplier" method="post" id="supplierAddForm" enctype="multipart/form-data">
                             @if (Session::has('success'))
                                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                             @endif
@@ -106,42 +21,43 @@
                             @endif
                             @csrf
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Supplier Name :</label>
+                                
                                 <div class="col p-2">
+                                    
                                     <input type="text" class="form-control" placeholder="Supplier Name" name="name">
                                 </div>
                             </div>
 
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Address :</label>
+                                
                                 <div class="col p-2">
                                     <input type="text" class="form-control" placeholder="Postal Address" name="address">
                                 </div>
                             </div>
 
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Contact Person Name :</label>
+                                
                                 <div class="col p-2">
                                     <input type="text" class="form-control" placeholder="Contact Person Name" name="contact_person">
                                 </div>
                             </div>
 
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Telephone Number :</label>
+                                
                                 <div class="col p-2">
                                     <input type="tel" class="form-control" placeholder="Telephone Number" name="telephone_no">
                                 </div>
                             </div>
 
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Mobile Number :</label>
+                                
                                 <div class="col p-2">
                                     <input type="tel" class="form-control" placeholder="Mobile Number" name="mobile_no">
                                 </div>
                             </div>
 
                             <div class="input-field p-3">
-                                <label for="txtCategoryName">Email :</label>
+                                
                                 <div class="col p-2">
                                     <input type="email" class="form-control" placeholder="Email" name="email">
                                 </div>
@@ -155,7 +71,11 @@
                 </div>
 
             </div>
-            <div class="col-md-7">
+            
+        </div>
+        <hr class="hr" />
+        <div class="row">
+            <div class="col-md-12">
                 {{--data view table--}}
                 <div class="card shadow">
                     <div class="card-body">
@@ -178,8 +98,8 @@
                                 <td>{{$supplier->address}}</td>
                                 <td>{{$supplier->telephone_no}}</td>
                                 <td>
-                                    <a href="#" data-toggle="modal" class="editSupplier" data-id="{{$supplier->id}}"><i style="color: green" class="bi bi-pencil-square"></i></a> |
-                                    <a href="{{route("Supplier.delete", $supplier->id)}} " data-toggle="modal" data-target="#DeleteSupplier"><i style="color: red" class="bi bi-trash3-fill"></i></a>
+                                    <a href="#" data-toggle="modal" class="editSupplier" data-id="{{$supplier->id}}"><i style="color: green" class="fa fa-pen"></i></a> |
+                                    <a href="{{route("Supplier.delete", $supplier->id)}} " data-toggle="modal" data-target="#DeleteSupplier"><i style="color: red" class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                                 @endforeach
@@ -191,20 +111,94 @@
             </div>
         </div>
 
-
     </div>
 
 
 @endsection
 
-{{--table create as data table--}}
+@push('scripts')
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script>
-    $(document).ready( function () {
+
+    // open modal for edit
+    $(document).ready(function() {
+
         $('#supplierTable').DataTable();
-    } );
+
+        $('.editSupplier').click(function(event) {
+            event.preventDefault();
+            var supplierId = $(this).data('id');
+
+            // AJAX call to fetch category details
+            $.ajax({
+                url: '/form_add_supplier/' + supplierId + '/edit',
+                method: 'GET',
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    var json_return = $.parseJSON(response);
+                    // Populate modal fields with the fetched data
+                    console.log(json_return);
+                    $('#ModalUpdateSupplier_name').val(json_return.name);
+                    $('#ModalUpdateSupplier_address').val(json_return.address);
+                    $('#ModalUpdateSupplier_contactName').val(json_return.contact_person);
+                    $('#ModalUpdateSupplier_TelNo').val(json_return.telephone_no);
+                    $('#ModalUpdateSupplier_MobNo').val(json_return.mobile_no);
+                    $('#ModalUpdateSupplier_Email').val(json_return.email);
+                    $('#supplier_id').val(json_return.id);
+                    $('#ModalEdiSupplier').modal('show');
+                },
+
+            });
+        });
+
+
+        // modal for update function
+        $('#SupplierUpdateForm').submit(function(event) {
+            event.preventDefault();
+            var fd = new FormData (this);
+
+            $('#btnUpdate').text('Updating...');
+
+            // AJAX call to fetch category details
+            $.ajax({
+                url: '{{route('Supplier.update')}}',
+                method: 'POST',
+                data: fd,
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(response) {
+                    // var json_return = $.parseJSON(response);
+
+                    console.log(response);
+                    if (response.status==200) {
+                        Swal.fire({
+                            title:  'Updated!',
+                            text: 'Supplier Details Updated Successfully!',
+                            icon: 'success'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // reload Page
+                                location.reload(true);
+                            }
+                        });
+                    }
+                    // Populate modal fields with the fetched data
+
+                    $('#btnUpdate').text('Update Supplier');
+                    $('#SupplierUpdateForm')[0].reset();
+                    $('#ModalEdiSupplier').modal('hide');
+                },
+
+            });
+        });
+
+    });
+
 </script>
-
-
+@endpush
 
 <!-- Modal HTML Markup -->
 <div id="ModalEdiSupplier" class="modal fade">

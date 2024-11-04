@@ -30,7 +30,7 @@ height: 100%;
       <img src="https://www.itarian.com/images/ticketing/ticket-management-system.png"
            class="img-fluid" alt="Sample image">
     </div>
-    
+
     <!-- Right column for the form -->
     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
       <h1><i class="fa-solid fa-cubes-stacked fa-fade" style="color: #be1e13; font-size: 50px;"></i> Stock Management System</h1>
@@ -47,15 +47,15 @@ height: 100%;
             <!-- Email input -->
             <div class="form-outline mb-4">
               <label class="form-label" for="form3Example3">Email address</label>
-              <input type="text" id="loginusername" name="loginusername" class="form-control form-control-lg" placeholder="Enter a valid email address"  />
-              
+              <input type="text" id="loginusername" name="loginusername" class="form-control form-control-lg" placeholder="Enter a valid email address"  required/>
+
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-3">
               <label class="form-label" for="form3Example4">Password</label>
-              <input type="password" id="loginpassword" name="loginpassword" class="form-control form-control-lg" placeholder="Enter password"  />
-              
+              <input type="password" id="loginpassword" name="loginpassword" class="form-control form-control-lg" placeholder="Enter password"  required/>
+
             </div>
 
             <!-- Remember me and Forgot password -->

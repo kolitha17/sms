@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Supplier;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class SupplierController extends Controller
 {
@@ -23,13 +25,19 @@ class SupplierController extends Controller
 
     public function store(Request $request){
 
-        $this->supplier->create($request->all());
-        return view('pages.form_add_supplier')->with('success', "Supplier Details Added Successfully");
-//        return response()->json([
-////            'status' => 200,
-//
-//        ]);
+        $incomingFields = $request->validate([
+            'name'=>['required','min:6','max:20'],
+            'address'=>['required'],
+            'contact_person'=>['required'],
+            'telephone_no'=>['required'],
+            'mobile_no'=>['required'],
+            'email'=>['required','email']
+        ]);
 
+        $supplier = Supplier::create($incomingFields);
+
+        $suppliers = $this->supplier->all();
+        return view('pages.form_add_supplier',compact('suppliers'))->with('success', "Supplier Details Added Successfully");
 
     }
 

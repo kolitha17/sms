@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('supplier_id')->constrained('suppliers');
             $table->string('bid_no');
             $table->string('pur_order_no');
-            $table->date('pur_order_date');
+            $table->date('po_date');
             $table->string('status')->default('active');
             $table->timestamps();
         });

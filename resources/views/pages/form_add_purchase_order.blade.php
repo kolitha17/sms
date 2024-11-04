@@ -38,7 +38,7 @@
 
 
 
-        {{--onchange function for SubCategory dropdown--}}
+        //onchange function for SubCategory dropdown
         function getSubCategory(sub_category_id) {
             var ajaxObject = new XMLHttpRequest();
 

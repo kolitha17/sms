@@ -19,8 +19,10 @@ class UserViewController extends Controller
 
     public function index(){
 
-        $response['users'] = $this->user->all();
-        return view('pages.user_table')->with($response);
+        //$response['users'] = $this->user->all();
+        $users = User::simplePaginate(5);
+        //$users = User::paginate(10)->appends(request()->query());
+        return view('pages.user_table',compact('users'));
     }
 
 

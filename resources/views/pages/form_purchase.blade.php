@@ -1,8 +1,6 @@
 {{--this page add to layout   --}}
 @extends('layouts.app')
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 {{--identify the content form the layout--}}
 @section('content')
     @include('pages.form_purchasing_item')
